@@ -22,6 +22,4 @@ public class CategoryService {
 	public List<Category> listCategory() {
 		return categoryRepo.findAll();
 	}
-
-	
 }
