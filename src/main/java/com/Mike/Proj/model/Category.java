@@ -25,6 +25,19 @@ public class Category {
 	@Column(name = "Image")
 	private @NotNull String imageUrl;
 
+
+
+	public Category(Integer id, String categoryName, String description, String imageUrl){
+		this.categoryName = categoryName;
+		this.description = description;
+		this.imageUrl = imageUrl;
+	}
+
+
+	public Category(){
+		
+	}
+
 	public Integer getId() {
 		return id;
 	}
