@@ -1,5 +1,7 @@
 package com.Mike.Proj.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class CategoryService {
 	public void createCategory(Category category) {
 		categoryRepo.save(category);
 		
+	}
+	
+	public List<Category> listCategory() {
+		return categoryRepo.findAll();
 	}
 
 	

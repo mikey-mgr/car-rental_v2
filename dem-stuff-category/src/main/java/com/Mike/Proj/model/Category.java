@@ -22,7 +22,7 @@ public class Category {
 	@Column(name = "Description")
 	private @NotNull String description;
 	
-//	@Column(name = "Image")
+	@Column(name = "Image")
 	private @NotNull String imageUrl;
 
 	public Integer getId() {

@@ -12,7 +12,7 @@ public class SpringDocConfig {
     public GroupedOpenApi controllerApi() {
         return GroupedOpenApi.builder()
                 .group("com.Mike")
-                .packagesToScan("controller") // Specify the package to scan
+                .packagesToScan("com.Mike.Proj.controller") // Specify the package to scan
                 .build();
     }
 
