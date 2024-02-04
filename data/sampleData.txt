@@ -1,0 +1,70 @@
+sample categories
+
+{
+  "categoryName": "Sedan",
+  "description": "A four-door car with a spacious interior and trunk",
+  "imageUrl": "sedan.jpg"
+},
+{
+  "categoryName": "SUV",
+  "description": "A large car with a high ground clearance and four-wheel drive",
+  "imageUrl": "suv.jpg"
+},
+{
+  "categoryName": "Hatchback",
+  "description": "A compact car with a rear door that opens upwards to access the cargo area",
+  "imageUrl": "hatchback.jpg"
+},
+{
+  "categoryName": "Convertible",
+  "description": "A car with a roof that can be folded down or removed to enjoy the open air",
+  "imageUrl": "convertible.jpg"
+},
+{
+  "categoryName": "Sports Car",
+  "description": "A car designed for high performance and speed, often with two seats and a sleek body",
+  "imageUrl": "sports_car.jpg"
+}
+    
+
+sample products
+{
+  
+  "name": "Toyota Camry",
+  "imageURL": "camry.jpg",
+  "price": 25000,
+  "description": "A reliable and fuel-efficient sedan with a spacious cabin and trunk",
+  "categoryId": "1"
+},
+{
+  
+  "name": "Ford Explorer",
+  "imageURL": "explorer.jpg",
+  "price": 35000,
+  "description": "A powerful and versatile SUV with a high ground clearance and four-wheel drive",
+  "categoryId": "2"
+},
+{
+  
+  "name": "Honda Civic",
+  "imageURL": "civic.jpg",
+  "price": 20000,
+  "description": "A compact and agile hatchback with a rear door that opens upwards to access the cargo area",
+  "categoryId": "3"
+},
+{
+  
+  "name": "Mazda MX-5",
+  "imageURL": "mx5.jpg",
+  "price": 30000,
+  "description": "A fun and stylish convertible with a roof that can be folded down or removed to enjoy the open air",
+  "categoryId": "4"
+},
+{
+  
+  "name": "Ferrari 488",
+  "imageURL": "ferrari.jpg",
+  "price": 250000,
+  "description": "A stunning and fast sports car designed for high performance and speed, with two seats and a sleek body",
+  "categoryId": "5"
+}

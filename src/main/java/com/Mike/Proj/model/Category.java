@@ -1,5 +1,8 @@
 package com.Mike.Proj.model;
 
+
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,25 +12,20 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Categories")
+@Table(name = "Car_Categories")
 public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "Category Name")
+	@Column(name = "Category_Name")
 	private @NotNull String categoryName;
-	
-	@Column(name = "Description")
 	private @NotNull String description;
-	
-	@Column(name = "Image")
 	private @NotNull String imageUrl;
 
-
-
 	public Category(Integer id, String categoryName, String description, String imageUrl){
+		this.id = id; // added this line to assign the id parameter to the id field
 		this.categoryName = categoryName;
 		this.description = description;
 		this.imageUrl = imageUrl;
@@ -35,7 +33,11 @@ public class Category {
 
 
 	public Category(){
-		
+		// added some default values for the fields with @NotNull annotation
+		this.id = 0;
+		this.categoryName = "Unknown";
+		this.description = "No description";
+		this.imageUrl = "no_image.jpg";
 	}
 
 	public Integer getId() {
