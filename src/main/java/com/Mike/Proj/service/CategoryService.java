@@ -3,6 +3,7 @@ package com.Mike.Proj.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.Mike.Proj.model.Category;
@@ -14,7 +15,7 @@ public class CategoryService {
 	@Autowired
 	CategoryRepo categoryRepo;
 	
-	public void createCategory(Category category) {
+	public void createCategory(@NonNull Category category) {
 		categoryRepo.save(category);
 		
 	}
@@ -24,6 +25,7 @@ public class CategoryService {
 	}
 
 	public void editCategory(int categoryId, Category updatedCategory) {
+		@SuppressWarnings("deprecation")
 		Category category = categoryRepo.getById(categoryId);
 		category.setCategoryName(updatedCategory.getCategoryName());
 		category.setDescription(updatedCategory.getDescription());
