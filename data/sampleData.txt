@@ -1,0 +1,199 @@
+
+{
+  "name": "NISSAN VERSA NOTE (2014)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 45,
+  "bookingStatus": "Available",
+  "description": "Compact hatchback, Fuel-efficient, Spacious interior, Reliable daily driver"
+}
+
+{
+  "name": "FIT NEW SHAPE (2014)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 45,
+  "bookingStatus": "Available",
+  "description": "Versatile and compact, Excellent fuel economy, Comfortable seating, Modern design"
+}
+
+{
+  "name": "FIT NEW SHAPE HYBRID (2014)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 50,
+  "bookingStatus": "Available",
+  "description": "Hybrid technology, Fuel-efficient, Practical for city driving, Sleek appearance"
+}
+
+{
+  "name": "TOYOTA ALLION (2010)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 50,
+  "bookingStatus": "Available",
+  "description": "Midsize sedan, Smooth ride, Reliable performance, Ample trunk space"
+}
+
+{
+  "name": "TOYOTA ΑΧΙΟ 2010",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 50,
+  "bookingStatus": "Available",
+  "description": "Compact SUV, Robust build, Off-road capability, Spacious cabin"
+}
+
+{
+  "name": "NISSAN XTRAIL T31 (2012)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 75,
+  "bookingStatus": "Available",
+  "description": "Crossover SUV, All-wheel drive, Comfortable for long trips, Good cargo capacity"
+}
+
+{
+  "name": "NISSAN XTRAIL T32 (2016)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 90,
+  "bookingStatus": "Available",
+  "description": "Updated version of X-Trail, Enhanced safety features, Modern infotainment system, Versatile seating options"
+}
+
+{
+  "name": "TOYOTA CAMRY (2010)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 80,
+  "bookingStatus": "Available",
+  "description": "Midsize sedan, Smooth ride quality, Reliable reputation, Spacious interior"
+}
+
+
+{
+  "name": "HILUX D4D AUTOMATIC 2012",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 120,
+  "bookingStatus": "Available",
+  "description": "Robust pickup truck, Diesel engine, Automatic transmission, Off-road capability"
+}
+
+{
+  "name": "HILUX GD6 AUTOMATIC 2020",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 180,
+  "bookingStatus": "Available",
+  "description": "Updated Hilux model, Improved fuel efficiency, Modern features, Tough and durable"
+}
+
+{
+  "name": "TOYOTA FORTUNER GD6 2.4 RB MT 2020",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 180,
+  "bookingStatus": "Available",
+  "description": "SUV with 7-seater capacity, Powerful diesel engine, Off-road prowess, Luxurious interior"
+}
+
+{
+  "name": "FORD RANGER (WILDTRAK) 2016",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 150,
+  "bookingStatus": "Available",
+  "description": "Robust pickup truck, Wildtrak trim level, Comfortable cabin, Towing capability"
+}
+
+{
+  "name": "FORD RANGER (WILDTRAK) 2023",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 300,
+  "bookingStatus": "Available",
+  "description": "Updated Ranger model, High-tech features, Rugged styling, Strong performance"
+}
+
+{
+  "name": "ISUZU MUX (2016)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 160,
+  "bookingStatus": "Available",
+  "description": "Full-size SUV, Spacious and practical, Diesel engine, Suitable for family trips"
+}
+
+{
+  "name": "MERCEDES BENZ E350 2019",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 270,
+  "bookingStatus": "Available",
+  "description": "Luxury sedan, Premium materials, Advanced safety tech, Smooth ride"
+}
+
+{
+  "name": "MERCEDES BENZ GLE 2022",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 450,
+  "bookingStatus": "Available",
+  "description": "Midsize luxury SUV, Cutting-edge features, Comfortable and spacious, Powerful engine options"
+}
+
+{
+  "name": "TOYOTA LANDCRUISER XLR 2022",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 400,
+  "bookingStatus": "Available",
+  "description": "Iconic off-road SUV, Legendary reliability, High ground clearance, Luxurious interior"
+}
+
+{
+  "name": "TOYOTA PRADO XL 2016",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 140,
+  "bookingStatus": "Available",
+  "description": "Midsize SUV, Prado variant, Solid build quality, Capable off-roader"
+}
+
+{
+  "name": "FORTUNER D4D 2013",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 150,
+  "bookingStatus": "Available",
+  "description": "SUV with 7-seater capacity, Diesel engine, Reliable performance, Spacious interior"
+}
+
+{
+  "name": "LAND ROVER DISCOVERY 4",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 150,
+  "bookingStatus": "Available",
+  "description": "Premium SUV, Off-road capabilities, Luxurious features, Comfortable seating"
+}
+
+{
+  "name": "MERCEDES BENZ C200 (2012)",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 100,
+  "bookingStatus": "Available",
+  "description": "Compact luxury sedan, Elegant design, Advanced safety systems, Smooth handling"
+}
+
+{
+  "name": "NISSAN ALTAS",
+  "categoryId": 1,
+  "imageURL": "string",
+  "price": 150,
+  "bookingStatus": "Available",
+  "description": "Commercial truck, Spacious cargo area, Efficient for logistics, Dependable workhorse"
+}
