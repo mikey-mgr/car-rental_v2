@@ -37,7 +37,7 @@ public class WebSecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and().authorizeHttpRequests((authz) -> authz
-            .requestMatchers("/product/list", "/product/find/**", "/category/list", "/category/show/**", "/user/**").permitAll()
+            .requestMatchers("/product/list", "/product/find/**", "/category/list", "/category/show/**", "/user/**", "/contact/submit").permitAll()
             .requestMatchers("/cart/**", "/wishlist/**", "/order/create-checkout-session").authenticated()
             .anyRequest().hasRole("ADMIN"))
             .formLogin().defaultSuccessUrl("/user/signin", true).usernameParameter("email").permitAll()

@@ -1,6 +1,6 @@
 <template>
     <div class="containter m-3">
-        <h2 class="text-center mt-5">Users List</h2>
+        <h3 class="pt-4 pb-4 text-center">Users List</h3>
         <ol class="list-group list-group-numbered mx-1 p-1">
             <p class="mt-2 pt-2">Total Cost: <span class="fw-bold">$ {{ totalCost }}</span></p>
             <li v-for="user of users" :key="user.id"
@@ -64,7 +64,7 @@ export default {
         
     },
     mounted(){
-        
+        this.$emit("adminInfo")
     },
 }
 </script>

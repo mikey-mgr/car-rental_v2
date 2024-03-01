@@ -10,9 +10,13 @@ import org.springframework.stereotype.Service;
 import com.Mike.Proj.dto.ProductDto;
 import com.Mike.Proj.exceptions.CustomException;
 import com.Mike.Proj.exceptions.ProductNotExistsException;
+import com.Mike.Proj.model.Cart;
 import com.Mike.Proj.model.Category;
 import com.Mike.Proj.model.Product;
+import com.Mike.Proj.model.Wishlist;
+import com.Mike.Proj.repository.CartRepo;
 import com.Mike.Proj.repository.ProductRepo;
+import com.Mike.Proj.repository.WishlistRepo;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -21,6 +25,12 @@ public class ProductService {
     
     @Autowired
     ProductRepo productRepo;
+
+    @Autowired
+    WishlistRepo wishlistRepo;
+
+    @Autowired
+    CartRepo cartRepo;
 
     
     public void createProduct(ProductDto productDto, Category category) {
@@ -31,6 +41,8 @@ public class ProductService {
         product.setPrice(productDto.getPrice());
         product.setCategory(category);
         product.setBookingStatus(productDto.getBookingStatus());
+        product.setFeatures(productDto.getFeatures());
+        product.setCarousel_imgs(productDto.getCarousel_imgs());
 
         productRepo.save(product);
     }
@@ -44,6 +56,8 @@ public class ProductService {
         productDto.setCategoryId(product.getCategory().getId());
         productDto.setId(product.getId());
         productDto.setBookingStatus(product.getBookingStatus());
+        productDto.setFeatures(product.getFeatures());
+        productDto.setCarousel_imgs(product.getCarousel_imgs());
 
         return productDto;
     }
@@ -73,6 +87,8 @@ public class ProductService {
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setBookingStatus(productDto.getBookingStatus());
+        product.setFeatures(productDto.getFeatures());
+        product.setCarousel_imgs(productDto.getCarousel_imgs());
         
         productRepo.save(product);
     }
@@ -85,9 +101,23 @@ public class ProductService {
         } return optionalProduct.get();
     }
 
+    //delete a product
     @SuppressWarnings("null")
     public void deleteProduct(Integer productId) {
         Optional<Product> optionalProduct = productRepo.findById(productId);
+
+        Optional <List<Wishlist>> optionalWishlists = wishlistRepo.findAllByProductId(optionalProduct.get().getId());
+
+        Optional <List<Cart>> optionalCarts = cartRepo.findAllByProductId(optionalProduct.get().getId());
+
+        if(!optionalCarts.get().isEmpty()){
+            // cartRepo.deleteAll(optionalCarts.get());
+            throw new CustomException("Cannot delete product because there are carts containing product");
+        }
+
+        if(optionalWishlists.isPresent()){
+            wishlistRepo.deleteAll(optionalWishlists.get());
+        }
 
         if(optionalProduct.isEmpty()){
             throw new ProductNotExistsException("Product id is invalid: " + productId);

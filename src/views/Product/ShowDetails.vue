@@ -1,19 +1,28 @@
 <template>
-    <div class="container p-3 mt-5 border" v-if="product">
+<div class="main-div">
+    <div class="container p-3 border" v-if="product">
         <div class="row align-items-center">
             <!-- display image, bootstrap carousel-->
             <div class="col-md-6 col-12">
                 <div id="autoplayCarousel" class="carousel slide" data-bs-ride="troue">
                     <div class="carousel-inner">
+                        <!-- dynamic images -->
                         <div class="carousel-item active">
-                        <img src="../../assets/AppImages/ford.jpg" class="d-block w-100" alt="...">
+                            <img :src="product.imageURL" class="d-block w-100" alt="Vehicle image">
+                        </div>
+                        <div v-for="(image, index) in product.carousel_imgs" :key="index" class="carousel-item">
+                            <img :src="image" class="d-block w-100" alt="vehicle image">
+                        </div>
+                        <!-- static images -->
+                        <!-- <div class="carousel-item active">
+                            <img src="../../assets/AppImages//cars/ford.jpg" class="d-block w-100" alt="Vehicle image">
                         </div>
                         <div class="carousel-item">
-                        <img src="../../assets/AppImages/car.jpg" class="d-block w-100" alt="...">
+                            <img src="../../assets/AppImages/cars/car.jpg" class="d-block w-100" alt="Vehicle image">
                         </div>
                         <div class="carousel-item">
-                        <img src="../../assets/AppImages/demio.jpg" class="d-block w-100" alt="...">
-                        </div>
+                            <img src="../../assets/AppImages/cars/demio.jpg" class="d-block w-100" alt="Vehicle image">
+                        </div> -->
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#autoplayCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -39,11 +48,11 @@
                 <form @submit="addToCart">
                     <div class="d-flex flex-row justify-content-between">
                         <div class="input-group input-group-parent p-0">
-                            <div class="input-group col-lg-5 col-md-9 col-sm-5 p-0 mb-2">
+                            <div class="input-group col-md-9 col-lg-7 col-xl-5 col-sm-5 p-0 mb-2">
                                 <span class="input-group-text">Number of days</span>
                                 <input type="number" min="1" max="30" id="days-input" class="form-control" v-model="quantity" required/>
                             </div>
-                            <div class="input-group col-md-9 col-lg-7 col-sm-6 p-0 mb-2">
+                            <div class="input-group col-md-9 col-lg-7 col-xl-6 col-sm-6 p-0 mb-2">
                                 <span class="input-group-text">Date to book</span>
                                 <input type="date" :min="minDate" :max="maxDate" id="date-input" class="form-control" v-model="bookedFor" required/>
                             </div>
@@ -55,13 +64,11 @@
                         </div>
                     </div>
                 </form>
-                <div class="features pt-3">
+                <div class="features pt-3 mb-3">
                     <h5><strong>Features</strong></h5>
-                    <ul>
-                        <li>6 speed gears</li>
-                        <li>4x4</li>
-                        <li>Manual</li>
-                    </ul>
+                    <div class="container p-0">
+                        <li v-for="(feature, index) in product.features" :key="index">{{ feature }}</li>
+                    </div>
                 </div>
                 <button v-show="!inWishlist" id="wishlist-button" class="btn mr-3" @click="addToWishlist" :disabled="addedToWishlist">
                     {{wishlistString}}
@@ -69,6 +76,11 @@
                 <button class="btn btn-danger mr-3" style="border-radius: 0%;" v-show="inWishlist" @click="removeWishlist(wishlistId)" :disabled="deletedFromWishlist">
                     {{wishlistString}}
                 </button>
+                <!-- edit button -->
+                <router-link :to="{name: 'EditProduct', params: {id: product.id}}"
+                    v-show="role == 'ADMIN'" >
+                    <button class="btn edit-prod mr-2">Edit</button>
+                </router-link>
 
                             <!-- Modal to confirm booking -->
                 <div class="modal fade" id="bookingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -78,12 +90,12 @@
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirm Booking</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                Your car has been added to cart.<br>View your cart to confirm your booking
+                            <div class="modal-body d-flex justify-content-center pb-2">
+                                <p class="m-0 py-3">Your car has been added to cart.<br>View your cart to confirm your booking</p>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer pt-0">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <router-link :to="{name: 'CartView'}"><button class="btn btn-primary" data-bs-dismiss="modal">View Cart</button></router-link>
+                                <router-link :to="{name: 'CartView'}"><button class="btn btn-info text-light" data-bs-dismiss="modal">View Cart</button></router-link>
                             </div>
                         </div>
                     </div> 
@@ -91,17 +103,17 @@
                 <!-- Modal to direct user to signin page -->
                 <div class="modal fade " id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content text-center text-bg-dark-subtle">
+                        <div class="modal-content text-center">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Login or Register</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                {{ modalText}}
+                            <div class="modal-body d-flex justify-content-center">
+                                <p class="m-0 py-3">{{ modalText}}</p>
                             </div>
                             <div class="modal-footer">
-                                <router-link :to="{name: 'SignupView'}"><button class="btn btn-primary" data-bs-dismiss="modal">Create account</button></router-link>
-                                <router-link :to="{name: 'SigninView'}"><button class="btn btn-primary" data-bs-dismiss="modal">Login</button></router-link>
+                                <router-link :to="{name: 'SignupView'}"><button class="btn btn-info text-light" data-bs-dismiss="modal">Create account</button></router-link>
+                                <router-link :to="{name: 'SigninView'}"><button class="btn btn-info text-light" data-bs-dismiss="modal">Login</button></router-link>
                             </div>
                         </div>
                     </div> 
@@ -109,6 +121,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -135,14 +148,14 @@ export default {
             cartItems: null,
             wishlist: null,
             wishlistId: null,
-            modalText: null
-            
+            modalText: null,
+            role: null
         }
     },
     methods: {
         //fetch all items in cart n set cart button to disabled if product is present
         async getCart(){
-            await axios.get(`${this.baseURL}/cart/?token=${this.token}`, { withCredentials: true })
+            await axios.get(`${this.baseURL}/cart/?token=${this.token}`)
             .then((res) => {
                 const result = res.data;
                 this.cartItems = result.cartItems;
@@ -163,7 +176,7 @@ export default {
         
         //fetch all items in wishlist n set wishlist button to disabled if product is present
         async getWishlist() {
-            await axios.get(`${this.baseURL}/wishlist/${this.token}`, { withCredentials: true })
+            await axios.get(`${this.baseURL}/wishlist/${this.token}`)
             .then((result) => {
                 this.wishlist = result.data;
             }).catch((err) => {console.log('err', err)});
@@ -195,15 +208,24 @@ export default {
                 productId: this.id,    
                 quantity: this.quantity,
                 bookedFor: this.bookedFor
-            }, { withCredentials: true }
+            }
             ).then((res) => {
+                //check if user is logged in
+                if(res.data == "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" integrity=\"sha384-oOE/3m0LUMPub4kaC09mrdEhIc+e3exm4xOGxAmuFXhBNF4hcg/6MiAXAf5p0P56\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n      <form class=\"form-signin\" method=\"post\" action=\"/login\">\n        <h2 class=\"form-signin-heading\">Please sign in</h2>\n        <p>\n          <label for=\"username\" class=\"sr-only\">Username</label>\n          <input type=\"text\" id=\"username\" name=\"email\" class=\"form-control\" placeholder=\"Username\" required autofocus>\n        </p>\n        <p>\n          <label for=\"password\" class=\"sr-only\">Password</label>\n          <input type=\"password\" id=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Password\" required>\n        </p>\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n      </form>\n</div>\n</body></html>"){
+                    this.$router.push({name: 'SigninView'});
+                    swal({
+                        text: "Please login or signup",
+                        icon: "info"
+                    });
+                    return;
+                }
                 if(res.status == 201){
                     let modal1 = document.getElementById('bookingModal');
                     let bsShowModal = new bootstrap.Modal(modal1, {toggle: false});
                     bsShowModal.show();
                     this.cartString = "Added to bookings",
                     this.inCart = true,
-                    this.$emit("fetchData")
+                    this.$emit("usersInfo")
                 }
             }).catch((err) => console.error('err', err));
         },
@@ -220,10 +242,17 @@ export default {
             }
             //logged in, so add item to wishlist
             await axios.post(`${this.baseURL}/wishlist/add?token=${this.token}`,
-            {
-                id: this.product.id,
-            }, { withCredentials: true }
+            {   id: this.product.id,    }
             ).then((res) => {
+                //check if user is logged in
+                if(res.data == "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" integrity=\"sha384-oOE/3m0LUMPub4kaC09mrdEhIc+e3exm4xOGxAmuFXhBNF4hcg/6MiAXAf5p0P56\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n      <form class=\"form-signin\" method=\"post\" action=\"/login\">\n        <h2 class=\"form-signin-heading\">Please sign in</h2>\n        <p>\n          <label for=\"username\" class=\"sr-only\">Username</label>\n          <input type=\"text\" id=\"username\" name=\"email\" class=\"form-control\" placeholder=\"Username\" required autofocus>\n        </p>\n        <p>\n          <label for=\"password\" class=\"sr-only\">Password</label>\n          <input type=\"password\" id=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Password\" required>\n        </p>\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n      </form>\n</div>\n</body></html>"){
+                    this.$router.push({name: 'SigninView'});
+                    swal({
+                        text: "Please login or signup",
+                        icon: "info"
+                    });
+                    return;
+                }
                 //if backend sucessfully adds to wishlist, change button text to confirm
                 if(res.status === 201){
                     this.wishlistString = "Added to wishlist";
@@ -239,11 +268,10 @@ export default {
 
         //remove item from wishlist
         async removeWishlist(id){
-            await axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`, { withCredentials: true })
+            await axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`)
             .then((res) => {
                 if(res.status == 200){
                     this.wishlistString = 'Removed from wishlist'
-                    this.$emit("fetcData");
                     this.deletedFromWishlist = true;
                     swal({
                         text: "Car has been removed from wishlist",
@@ -259,40 +287,40 @@ export default {
         },
 
         //set the midate for the date element
-        minDate() {
-            // Get the current date
-            let today = new Date();
-            // Format the date as yyyy-mm-dd
-            let yyyy = today.getFullYear();
-            let mm = today.getMonth() + 1; // January is 0
-            let dd = today.getDate();
-            if (mm < 10) {
-                mm = "0" + mm;
-            }
-            if (dd < 10) {
-                dd = "0" + dd;
-            }
-            return yyyy + "-" + mm + "-" + dd;
-        },
+        // minDate() {
+        //     // Get the current date
+        //     let today = new Date();
+        //     // Format the date as yyyy-mm-dd
+        //     let yyyy = today.getFullYear();
+        //     let mm = today.getMonth() + 1; // January is 0
+        //     let dd = today.getDate();
+        //     if (mm < 10) {
+        //         mm = "0" + mm;
+        //     }
+        //     if (dd < 10) {
+        //         dd = "0" + dd;
+        //     }
+        //     return yyyy + "-" + mm + "-" + dd;
+        // },
 
         //set the maxdate for the date element
-        maxDate() {
-            // Get the current date
-            let today = new Date();
-            // Add 30 days to the date
-            let after30Days = new Date(today.setDate(today.getDate() + 30));
-            // Format the date as yyyy-mm-dd
-            let yyyy = after30Days.getFullYear();
-            let mm = after30Days.getMonth() + 1; // January is 0
-            let dd = after30Days.getDate();
-            if (mm < 10) {
-                mm = "0" + mm;
-            }
-            if (dd < 10) {
-                dd = "0" + dd;
-            }
-            return yyyy + "-" + mm + "-" + dd;
-        },
+        // maxDate() {
+        //     // Get the current date
+        //     let today = new Date();
+        //     // Add 30 days to the date
+        //     let after30Days = new Date(today.setDate(today.getDate() + 30));
+        //     // Format the date as yyyy-mm-dd
+        //     let yyyy = after30Days.getFullYear();
+        //     let mm = after30Days.getMonth() + 1; // January is 0
+        //     let dd = after30Days.getDate();
+        //     if (mm < 10) {
+        //         mm = "0" + mm;
+        //     }
+        //     if (dd < 10) {
+        //         dd = "0" + dd;
+        //     }
+        //     return yyyy + "-" + mm + "-" + dd;
+        // },
     },
 
     mounted() {
@@ -300,6 +328,7 @@ export default {
         this.product = this.products.find(product => product.id == this.id);
         this.category = this.categories.find((category) => category.id == this.product.categoryId);
         this.token = localStorage.getItem("token");
+        this.role = localStorage.getItem("role");
         this.getWishlist();
         this.getCart();
     },
@@ -307,6 +336,15 @@ export default {
 </script>
 
 <style scoped>
+.modal{
+    --bs-modal-footer-border-color: none;
+    --bs-modal-footer-border-width: none;
+    --bs-modal-header-border-color: none;
+    --bs-modal-header-border-width: none;
+}
+.modal-content{
+    height: 230px;
+}
 .d-block.w-100{
     height: 40vh;
     width: 50vh;
@@ -314,13 +352,22 @@ export default {
 }
 .category{
     font-weight: 400;
+}.main-div{
+    padding-top: 30px;
 }
 #wishlist-button {
     border-radius: 0%;
     background-color: rgb(62, 0, 112);
     border-color: rgb(62, 0, 112);
     color: white;
-} #wishlist-button:hover{
+} 
+.edit-prod{
+    border-radius: 0%;
+    background-color: #f0c14b;
+    color: black;
+    border-color: #f0c14b;
+}
+#wishlist-button:hover{
     background-color: white;
     color: black;
     

@@ -3,30 +3,22 @@
     <div class="" id="background-div">
             <!-- <img src="../assets/home.jpg" class="w-100 img-fluid" alt=""> -->
     </div>
-     <div class="container p-5 text-center about-us col-sm-10">
-        <div class="row">
-          <h1 class="display-6">About Us</h1>
-          <h4 class="mb-5">Royalty Car Rental <br><br></h4>
-          <p class="text-start mt-5" style="font-size: large;">Our vision is to become the most customer centric company in car rental industry. We will be persistent in building strong relationships with our customers and business partners.<br><br>
-              We will be constantly focusing on innovation and delivery of simple high-quality service to our customers. <br><br>
-              We are convinced that we need to innovate and control the high technology behind our services, and to participate only in markets where we can make significant contribution. <br><br>
-              We don’t settle for anything less than excellence in every branch office and group in the company. We have courage to admit when and if we are wrong and courage to change. <br><br>
-              We strive to create local opportunity, competitive advantage growth, and impact in every branch office around the World. <br><br>
-              Our strategy is to build best-in-class IT platforms which will enable us to be productive and to deliver carefully customized services.
-          </p>
-        </div>
-     </div>
-     
+    <div class="container">
+      <div class="container text-center banner py-5 mt-5">
+        <h3>Royalty Car Rental Group</h3>
+        <h5 class="display-6">Royalty BRAND, Royalty SERVICES!</h5>
+      </div>
+    </div>
       <!-- sections -->
-      <div class="nav-pills nav-fill mt-3" id="nav">
+      <div class="nav-pills nav-fill mt-3" id="sections">
           <!-- our values dropdown -->
         <section class="nav-item text-start">
-          <a class="nav-link page-sections active sticky-top" type="button"
+          <div class="nav-link page-sections active sticky-top"
               data-toggle="collapse" aria-label="Toggle navigation"
                   aria-expanded="true" data-target="ourValues"
                   aria-controls="ourValues" id="ourValuesBtn">
                   01 Our Values
-          </a>
+        </div>
           <div class="row g-0" id="ourValues" aria-labelledby="ourValuesBtn">
             <div class="col-md-6 text-white section-text">
               <div class="container-fluid pe-xl-0 h-100">
@@ -39,12 +31,12 @@
               </div>
             </div>
             <div class="col-md-6">
-              <img src="../assets/ceo1.jpg" class="img-fluid max-h-100-vh" alt="...">
+              <img src="../assets/AppImages/home_page/values.jpg" class="img-fluid max-h-100-vh" alt="our values">
             </div>
             <!-- <div class="row p-5 mx-0"></div> -->
             <div class="row g-0 p-5 section-description-text">
               <div class="col-lg-5 d-flex">
-                <img src="../assets/ceo2.jpg" class="img-fluid max-h-100-vh" alt="...">
+                <img src="../assets/AppImages/home_page/ceo2.jpg" class="img-fluid max-h-100-vh" alt="Royalty Ceo">
               </div>
               <div class="col-lg-7">
                 <div class="container-fluid pe-xl-0 h-100">
@@ -65,12 +57,12 @@
 
           <!-- our vision dropdown -->
         <div class="nav-item text-start">
-          <a class="nav-link page-sections sticky-top active" type="button"
+          <div class="nav-link page-sections sticky-top active"
               data-toggle="collapse" aria-label="Toggle-navigation"
                 aria-expanded="true" data-target="ourVision"
                   aria-controls="ourVision">
                   02 Our Vision
-          </a>
+        </div>
           <div class="row g-0" id="ourVision">
             <div class="col-md-6 text-white section-text">
               <div class="container-fluid pe-xl-0 h-100">
@@ -83,22 +75,22 @@
               </div>
             </div>
             <div class="col-md-6">
-              <img src="../assets/our-vision.jpg" class="img-fluid max-h-100-vh" alt="...">
+              <img src="../assets/AppImages/home_page/our-vision.jpg" class="img-fluid max-h-100-vh" alt="our vision">
             </div>
           </div>
         </div>
 
         <!-- Our know-how dropdown -->
         <div class="nav-item text-start">
-          <a class="nav-link page-sections sticky-top active" type="button"
+          <div class="nav-link page-sections sticky-top active"
               data-toggle="collapse" aria-label="Toggle-navigation"
                 aria-expanded="true" data-target="ourKnowHow"
                   aria-controls="ourKnowHow">
                   03 Our Know-How
-          </a>
+        </div>
           <div class="row g-0" id="ourKnowHow">
             <div class="col-md-6 d-flex">
-              <img src="../assets/AppImages/demio.jpg" class="img-fluid max-h-100-vh" alt="...">
+              <img src="../assets/AppImages/home_page/know-how.jpg" class="img-fluid max-h-100-vh" alt="our know how">
             </div>
             <div class="col-md-6 text-white section-text">
               <div class="container-fluid pe-xl-0 h-100">
@@ -131,12 +123,12 @@
 
         <!-- Our Locations dropdown -->
         <div class="nav-item text-start">
-          <a class="nav-link page-sections sticky-top active" type="button"
+          <div class="nav-link page-sections sticky-top active"
               data-toggle="collapse" aria-label="Toggle-navigation"
                 aria-expanded="true" data-target="ourLocation"
                   aria-controls="ourLocation">
                   04 Our Locations
-          </a>
+        </div>
           <div class="row g-0" id="ourLocation">
             <div class="col-md-6 text-white section-text">
               <div class="container-fluid pe-xl-0 h-100">
@@ -149,11 +141,11 @@
               </div>
             </div>
             <div class="col-md-6">
-              <img src="../assets/locations.jpg" class="img-fluid max-h-100-vh" alt="...">
+              <img src="../assets/AppImages/home_page/locations.jpg" class="img-fluid max-h-100-vh" alt="locations">
             </div>
           </div>
           <div class="col-12 map-container w-100 bg-light-gray py-4 px-3 py-lg-9">
-            <img src="../assets/map-main.png" class="img-fluid max-h-100-vh" title="Royal Car Rental">
+            <img src="../assets/AppImages/map/map-main.png" class="img-fluid max-h-100-vh" title="Royalty Car Rental">
             <div class="px-3 px-lg-0 map-stats d-flex flex-column flex-sm-row justify-content-evenly align-items-center mt-4">
               <div class="d-flex flex-column justify-content-center align-items-center mb-4">
                 <span class="lh-1 mb-2 display-4 text-warning">
@@ -186,14 +178,14 @@
 
         <!-- Our Fleets dropdown -->
         <div class="nav-item text-start">
-          <a class="nav-link page-sections sticky-top active" type="button"
+          <div class="nav-link page-sections sticky-top active"
               data-toggle="collapse" aria-label="Toggle-navigation"
                 aria-expanded="false" data-target="ourFleets"
                   aria-controls="ourFleets">
                   05 Our Fleets
-          </a>
+        </div>
           <div class="row g-0" id="ourFleets">
-            <div class="col-md-7 text-white section-text">
+            <div class="col-lg-7 text-white section-text">
               <div class="container-fluid pe-xl-0 h-100">
                 <div class="d-flex flex-column justify-content-center align-items-start max-w-500 h-100 mx-auto ms-lg-0 me-lg-auto px-3 px-lg-3 py-5 py-xl-0">
                   <h2 class="">Our Fleets</h2>
@@ -203,8 +195,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-5">
-              <img src="../../public/logo-square.jpg" class="img-fluid max-h-100-vh" alt="...">
+            <div class="col-lg-5">
+              <img src="../assets/AppImages/cars/cars-exec.jpg" class="img-fluid max-h-100-vh" alt="cars">
             </div>
           </div>
         </div>
@@ -242,7 +234,17 @@
           </div>
         </div>
       </div>
-
+      <div class="container pt-4">
+        <div class="row">
+          <div class="col-md-8 mb-3">
+            <h3 class="text-primary">TELL US WHERE YOU WANT TO GO</h3>
+            We assure you we can get you there safe and sound!
+          </div>
+          <div class="col-md-4 col-xs-12 col-sm-12">
+            <router-link class="btn btn-primary col-12 contact-us" :to="{name: 'ContactUs'}">CONTACT US</router-Link>
+          </div>
+        </div>
+      </div>
   
   </div>
 </template>
@@ -262,23 +264,29 @@ export default {
     }
   },
   methods:{
-    scrollPositions(){
-    }
   },
   mounted() {
     this.categorySize = Math.min(6, this.categories.length );
     this.productSize = Math.min(8, this.products.length);
-    // this.scrollPositions();
   }
 };
 </script>
 
 
 <style scoped>
-
+.contact-us{
+  background-color: white;
+  border-radius: 0;
+  border-color: #0d6efd;
+  color: black;
+}
+.contact-us:hover{
+  background-color: #0d6efd;
+}
 #background-div {
   margin-top: -55px;
-  background: url("../assets/home.jpg");
+  margin-bottom: -20px;
+  background: url("../assets/AppImages/home_page/home.jpg");
   background-size: cover !important;
   min-height: 90vh;
 }
@@ -297,18 +305,9 @@ export default {
 .map-stats {
   position: relative;
 }
-  #home{
-    background-color: rgb(241, 241, 241);
-  }
   #heading {
     font-weight: 400;
   }
-  .about-us{
-  margin-top: -180px;
-  margin-bottom: 2rem;
-  background-color: rgba(201, 201, 201, 0.85); /* Creamy color with 92.5% opacity */
-  /* transition: all 1s ease-in-out 0s; */
-}
   div{
     transition: all 1s ease-in-out 0s;
   }
@@ -325,8 +324,15 @@ export default {
     cursor: default;
   }
   @media (min-width: 0px) and (max-width: 992px) {
-    div.about-us{
-      margin-top: 2rem;
+    
+  }
+  @media (min-width: 0px) and (max-width: 500px) {
+    #background-div{
+      display: none;
+    }
+    .banner{
+      padding-top: 50px;
+      padding-bottom: 40px;
     }
   }
 </style>

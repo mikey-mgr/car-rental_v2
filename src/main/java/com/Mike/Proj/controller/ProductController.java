@@ -78,7 +78,7 @@ public class ProductController {
          }
 
          productService.updateProduct(productDto, productId);
-         return new ResponseEntity<APIResponse>(new APIResponse(true, "product has been updated"), HttpStatus.OK);
+         return new ResponseEntity<APIResponse>(new APIResponse(true, "Product has been updated"), HttpStatus.OK);
     }
 
     //delete a product

@@ -11,13 +11,18 @@ import org.springframework.stereotype.Service;
 import com.Mike.Proj.dto.ProductDto;
 import com.Mike.Proj.exceptions.CustomException;
 import com.Mike.Proj.model.Category;
+import com.Mike.Proj.model.Product;
 import com.Mike.Proj.repository.CategoryRepo;
+import com.Mike.Proj.repository.ProductRepo;
 
 @Service
 public class CategoryService {
 
 	@Autowired
 	CategoryRepo categoryRepo;
+
+	@Autowired
+	ProductRepo productRepo;
 
 	@Autowired
 	ProductService productService;
@@ -59,7 +64,13 @@ public class CategoryService {
 	public void deleteCategory(Integer categoryId) {
         Optional<Category> optionalCategory = categoryRepo.findById(categoryId);
 
-        // throw an exception if product doesnt exist
+		Optional<List<Product>> optionalProducts = productRepo.findAllByCategoryId(optionalCategory.get().getId());
+
+		if(!optionalProducts.get().isEmpty()){
+			throw new CustomException("Cannot delete category, products exist in it");
+		}
+
+        // throw an exception if category doesnt exist
         if(!optionalCategory.isPresent()){
             throw new CustomException("Category isn't present");
         }

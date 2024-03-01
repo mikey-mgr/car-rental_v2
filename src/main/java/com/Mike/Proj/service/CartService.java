@@ -13,8 +13,10 @@ import com.Mike.Proj.dto.cart.CartDto;
 import com.Mike.Proj.dto.cart.CartItemDto;
 import com.Mike.Proj.exceptions.CustomException;
 import com.Mike.Proj.model.Cart;
+import com.Mike.Proj.model.CartHistory;
 import com.Mike.Proj.model.Product;
 import com.Mike.Proj.model.User;
+import com.Mike.Proj.repository.CartHistoryRepo;
 import com.Mike.Proj.repository.CartRepo;
 
 @Service
@@ -25,6 +27,9 @@ public class CartService{
 
     @Autowired
     CartRepo cartRepo;
+
+    @Autowired
+    CartHistoryRepo cartHistoryRepo;
 
     //add new item to cart
     public void addToCart(AddToCartDto addToCartDto, User user) {
@@ -41,6 +46,15 @@ public class CartService{
         cart.setBookedFor(addToCartDto.getBookedFor());
 
         cartRepo.save(cart);
+
+        // (Integer cartId, Date createdDate, String user, String product, int quantity, LocalDate bookedFor)
+        String username = user.getFirstName() + " " + user.getLastName();
+
+        Double price = product.getPrice() * addToCartDto.getQuantity();
+
+        CartHistory cartHistory = new CartHistory(cart.getId(), new Date(), username, product.getName(), addToCartDto.getQuantity(), addToCartDto.getBookedFor(), price);
+
+        cartHistoryRepo.save(cartHistory);
     }
 
     //generate booking list sorted according to date created

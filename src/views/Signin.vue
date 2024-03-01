@@ -54,12 +54,10 @@ export default {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
                     },
-                    withCredentials: true // send cookies
                 }).then((res) =>{
-                    console.log(res)
                     let loginInfo = res.data;
                     if(loginInfo.status=="Login Success"){
-                        this.$emit("fetchData");
+                        this.$emit("usersInfo");
                         swal({
                             text: "Login successful, redirecting",
                             icon: "success"

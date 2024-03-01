@@ -21,9 +21,23 @@
         </button>
         <div class="collapse navbar-collapse mx-4 justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav justify-content-evenly w-100">
-              <li class="nav-item"><router-link class="nav-link text-light" v-if="role == 'ADMIN'" :to="{name: 'AdminView'}">ADMIN</router-link></li>
-              <li class="nav-item"><router-link class="nav-link text-light" :to="{name: 'HomeView'}">HOME</router-link></li>
-              <li class="nav-item"><router-link class="nav-link text-light" :to="{name: 'VehiclesView'}">VEHICLES</router-link></li>
+              <li class="nav-item dropdown" v-if="role == 'ADMIN'">
+                <a href="" class="nav-link text-light dropdown-toggle"  :class="{'active': $route.path==='/admin' || $route.path==='/admin/vehicle' || $route.path==='/admin/category' || $route.path==='/admin/users'}" id="navbarAdmin" data-toggle="dropdown">
+                  ADMIN
+                </a>
+                <ul class="dropdown-menu admin-dropdown" aria-labelledby="navbarAdmin">
+                  <router-link v-if="token" class="dropdown-item" :to="{name: 'AdminView'}">Dashboard</router-link>
+                  <router-link v-if="token" class="dropdown-item" :to="{name: 'AdminProduct'}">Vehicles</router-link>
+                  <router-link v-if="token" class="dropdown-item" :to="{name: 'AdminCategory'}">Categories</router-link>
+                  <router-link v-if="token" class="dropdown-item" :to="{name: 'UsersView'}">Users</router-link>
+                </ul>
+                <!-- <router-link :class="{'active': $route.path==='/admin' || $route.path==='/admin/vehicle' || $route.path==='/admin/category'}" class="nav-link text-light" v-if="role == 'ADMIN'" :to="{name: 'AdminView'}">ADMIN</router-link> -->
+              </li>
+
+
+              <li class="nav-item"><router-link :class="{'active': $route.path==='/home'}" class="nav-link text-light" :to="{name: 'HomeView'}">HOME</router-link></li>
+              <li class="nav-item"><router-link :class="{'active': $route.path==='/about'}" class="nav-link text-light" :to="{name: 'AboutUs'}">ABOUT US</router-link></li>
+              <li class="nav-item"><router-link :class="{'active': $route.path==='/vehicles/'}" class="nav-link text-light" :to="{name: 'VehiclesView'}">VEHICLES</router-link></li>
               
             <!-- Dropdown for account -->
             <!-- <ul class="navbar-nav nav-underline mr-auto"> -->
@@ -35,18 +49,20 @@
                         >ACCOUNT
                 </a>
                 <ul class="dropdown-menu account-dropdown" aria-labelledby="navbarAccount">
-                  <router-link v-if="token" class="dropdown-item" :to="{name: 'WishList'}">WISHLIST</router-link>
-                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SignupView'}">SIGNUP</router-link>
+                  <router-link v-if="token" class="dropdown-item" :to="{name: 'WishList'}">Wishlist</router-link>
+                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SignupView'}">Signup</router-link>
                   <li><hr class="dropdown-divider"></li>
-                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SigninView'}">LOGIN</router-link>
-                  <a href="#" v-if="token" @click="logout" class="dropdown-item">LOGOUT</a>
+                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SigninView'}">Login</router-link>
+                  <a href="#" v-if="token" @click="logout" class="dropdown-item">Logout</a>
                 </ul>
               </li>
+              <li class="nav-item"><router-link :class="{'active': $route.path==='/contact'}" class="nav-link text-light" :to="{name: 'ContactUs'}">CONTACT</router-link></li>
             <!-- </ul > -->
               <li v-if="role" class="nav-item cart position-relative">
-                  <span id="cart-nav-count">{{ cartCount }}</span>
+                  <span class="rounded rounded-pill" id="cart-nav-count">{{ cartCount }}</span>
                   <router-link style="font-size: 36px; color: #c18e32;" 
-                      :to="{name:'CartView'}" class="py-2 bi bi-cart nav-link text-decoration-none">
+                      :to="{name:'CartView'}" class="py-2 bi bi-cart nav-link text-decoration-none"
+                      :class="{'active': $route.path==='/cart'}">
                     <!-- <img class="icon-link" style="width: 40px;" src="../../public/cart-shopping-solid.svg" alt=""> -->
                   </router-link>
               </li>
@@ -71,12 +87,12 @@ import swal from 'sweetalert';
     },
     methods: {
       async logout(){
-        await axios.get(`${this.baseURL}/logout`, { withCredentials: true })
+        await axios.get(`${this.baseURL}/logout`)
         .then((res) =>{
           if(res.data == "Logout Success"){
             swal({
-            text: "You have logged out",
-            icon: "success"
+              text: "You have logged out",
+              icon: "success"
             });
             localStorage.removeItem("token");
             localStorage.removeItem("role");
@@ -84,16 +100,18 @@ import swal from 'sweetalert';
             this.$emit("clearUsers");
             this.$router.push({name: 'HomeView'});
             this.$emit("resetCartCount");
-            // this.$emit("getUsers");
             window.location.replace("/home");
-          }
+          } else swal({
+            text: "Something went wrong, please try again",
+            icon: "warning"
+          })
         }).catch((err) => console.log('err', err));
       },
-      
     },
     mounted(){
         this.token = localStorage.getItem("token");
         this.role = localStorage.getItem("role");
+        this.$emit("usersInfo");
     },
   }
 </script>
@@ -137,18 +155,22 @@ import swal from 'sweetalert';
     margin-left: 0.4em;
     margin-top: 0.7rem;
 }
+#navbarAdmin.dropdown-toggle::after{
+  display: inline-block;
+    margin-left: 0.4em;
+    margin-top: 0.7rem;
+}
 #cart-nav-count{
   text-decoration-style: none;
   background-color: crimson; 
   color: white;
   border-radius: 50%;
-  height: 15px;
-  width: 15px;
+  height: 20px;
   font-size: 15px;
   align-items: center;
   justify-content: center;
   display: flex;
-  padding: 0.65rem;
+  padding: 0.1rem;
   position: absolute;
   left: 10px;
   top: 5px;

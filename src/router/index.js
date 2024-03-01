@@ -20,6 +20,8 @@ import Users from "../views/Users";
 import Vehicles from "../views/Vehicles";
 import AboutUs from "../views/AboutUs";
 import ContactUs from "../views/ContactUs";
+import "../views/Admin.vue"
+import NotFound from "../views/NotFound.vue"
 
 const routes = [
   {
@@ -51,28 +53,39 @@ const routes = [
   {
     path: '/admin',
     name: 'AdminView',
-    component: Admin
+    component: Admin,
+    // beforeEnter: (to, from, next) => {
+    //   // Call your adminInfo method here
+    //   adminInfo().then(() => {
+    //     // Once the data is fetched, call next() to proceed with the navigation
+    //     next();
+    //   }).catch((error) => {
+    //     // Handle errors, for example by redirecting to an error page
+    //     console.error(error);
+    //     next(false);
+    //   });
+    // }
   },
   {
-    path: '/admin/products',
+    path: '/admin/vehicles',
     name: 'AdminProduct',
     component: AdminProduct
   },
     // add product
   {
-    path: '/admin/product/new',
+    path: '/admin/vehicle/new',
     name: 'AddProduct',
     component: AddProduct
   },
   // edit product
   {
-    path: '/admin/product/:id',
+    path: '/admin/vehicle/:id',
     name: 'EditProduct',
     component: EditProduct
   },
   //show product details
   {
-    path: '/product/show/:id/:name',
+    path: '/vehicle/show/:id/:name',
     name: 'ProductDetails',
     component: ShowDetails
   },
@@ -138,15 +151,20 @@ const routes = [
   },
   //Contact us page
   {
-    path: '/home/contact',
+    path: '/contact',
     name: 'ContactUs',
     component: ContactUs
   },
   //show all vehicles
   {
-    path: '/home/about',
+    path: '/about',
     name: 'AboutUs',
     component: AboutUs
+  },
+  //the not found path
+  { path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound
   },
 ]
 

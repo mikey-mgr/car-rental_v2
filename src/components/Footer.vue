@@ -73,9 +73,8 @@ export default {
 <style scoped>
 
 footer{
-    margin-top: 100px;
-    background-image: url("../assets/footer1.jpg");
-    background-size: cover !important;
+    margin-top: 40px;
+    background-color: #090051;
     font-size: 16px;
 }
 .footer-link{
@@ -83,7 +82,8 @@ footer{
     color: white;
 }
 .media-icon{
-    color: darkgoldenrod;
+    color: gold;
+    font-size: larger;
 }
 .footer-link:hover{
     color: darkgoldenrod;

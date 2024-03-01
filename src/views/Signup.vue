@@ -71,7 +71,7 @@ export default {
                     lastName: this.lastName,
                     password: this.password,
                 };
-                await axios.post(`${this.baseURL}/user/signup`, user, { withCredentials: true })
+                await axios.post(`${this.baseURL}/user/signup`, user)
                 .then(() => {
                     this.$router.replace('/');
                     swal({

@@ -1,5 +1,7 @@
 package com.Mike.Proj.model;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -21,20 +23,36 @@ public class Product {
     private Integer id;
 
     private @NotNull String name;
+    @Column(length = 10000)
     private @NotNull String imageURL;
     private @NotNull double price;
     @Column(length = 1000)
     private @NotNull String description;
     private @NotNull String bookingStatus;
-    // private @NotNull List<String> features;
+    @Column(length = 1000)
+    private @NotNull ArrayList<String> features;
+    @Column(length = 10000)
+    private @NotNull ArrayList<String> carousel_imgs;
 
+    public Product(){
+        
+    }
+
+    public Product(ArrayList<String> features, ArrayList<String> imgs) {
+        this.name = "string";
+        this.imageURL = "string";
+        this.price = 50;
+        this.description = "string";
+        this.bookingStatus = "string";
+        this.features = features;
+        this.carousel_imgs = imgs;
+    }
 
     // Many to one relationship
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "category_id")
     Category category;
-
 
     public String getName() {
         return name;
@@ -98,4 +116,33 @@ public class Product {
         this.bookingStatus = bookingStatus;
     }
 
+
+    /**
+     * @return @NotNull ArrayList<String> return the features
+     */
+    public ArrayList<String> getFeatures() {
+        return features;
+    }
+
+    /**
+     * @param features the features to set
+     */
+    public void setFeatures(ArrayList<String> features) {
+        this.features = features;
+    }
+
+
+    /**
+     * @return ArrayList<String> return the carousel_imgs
+     */
+    public ArrayList<String> getCarousel_imgs() {
+        return carousel_imgs;
+    }
+
+    /**
+     * @param carousel_imgs the carousel_imgs to set
+     */
+    public void setCarousel_imgs(ArrayList<String> carousel_imgs) {
+        this.carousel_imgs = carousel_imgs;
+    }
 }

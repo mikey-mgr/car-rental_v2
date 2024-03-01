@@ -21,7 +21,9 @@ public class Category {
 	
 	@Column(name = "Category_Name")
 	private @NotNull String categoryName;
+	@Column(length = 1000)
 	private @NotNull String description;
+	@Column(length = 10000)
 	private @NotNull String imageUrl;
 
 	public Category(Integer id, String categoryName, String description, String imageUrl){

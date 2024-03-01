@@ -21,8 +21,8 @@
         <form class="form col-lg-4" @submit="searchVehicle">
             <div class="input-group">
             <input
-                size="40"
-                v-model="searchText"
+              size="40"
+              v-model="searchText"
               type="text"
               class="form-control"
               placeholder="Search Vehicles"
@@ -38,7 +38,7 @@
                 <option value="MERCEDES BENZ GLE 2022"></option>
                 <option value="FIT NEW SHAPE HYBRID (2014)"></option>
             </datalist>
-            <button v-if="text" @click="clearSearch" class="input-group-text bi bi-trash" style="background-color: white;"></button>
+            <a v-if="text" @click="clearSearch" class="input-group-text bi bi-trash" style="background-color: white;"></a>
             <div class="input-group-prepend">
               <button type="submit" class="input-group-text font-weight-bold h-100" id="search-button-navbar">
                   <svg
@@ -60,7 +60,7 @@
         <div class="row justify-content-evenly">
             <div v-for="product of vehicles" :key="product.id"
                  class="col-md-6 col-xl-4 col-12 pt-3 d-flex">
-                <ProductBox :product="product" :users="users"/>
+                <ProductBox :role="role" :product="product" :users="users" :categoryName="productCategory(product, categories)"/>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@ import ProductBox from '@/components/ProductBox.vue';
 import axios from 'axios';
 export default {
     name: 'VehiclesView',
-    props: ['products', "baseURL", "users"],
+    props: ['products', "baseURL", "users", "categories"],
     components: {ProductBox},
     data(){
         return{
@@ -79,13 +79,14 @@ export default {
             text: null,
             vehicles: this.products,
             search: false,
-            notFound: false
+            notFound: false,
+            role: null
         }
     },
     methods:{
         async searchVehicle(e){
             e.preventDefault();
-            await axios.get(`${this.baseURL}/product/find/?name=${this.searchText}`, { withCredentials: true })
+            await axios.get(`${this.baseURL}/product/find/?name=${this.searchText}`)
             .then((res) =>{
                 this.vehicles = res.data;
                 this.search = true;
@@ -100,10 +101,26 @@ export default {
             });
         },
         clearSearch(){
-          this.$router.go(0);
-          window.location.reload();
-        }
-    }
+          this.search = false;
+          this.notFound = false;
+          this.text = null;
+          this.searchText = null;
+          this.vehicles = this.products;
+        },
+        productCategory(product, categories){
+            let categoryName = "";
+            if(categories)
+                for(let j=0; j < categories.length; j++){
+                    if(product.categoryId == categories[j].id){
+                        categoryName = categories[j].categoryName;
+                    }
+                }
+            return categoryName;
+        },
+    },
+    mounted() {
+      this.role = localStorage.getItem("role");
+    },
 }
 </script>
 

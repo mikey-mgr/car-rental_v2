@@ -43,7 +43,7 @@ export default {
     methods: {
         //get all items in wishlist
         fetchWishlist() {
-            axios.get(`${this.baseURL}/wishlist/${this.token}`, { withCredentials: true })
+            axios.get(`${this.baseURL}/wishlist/${this.token}`)
                 .then((result) => {
                 this.wishlists = result.data;
                 if(this.wishlists!=null){
@@ -61,7 +61,7 @@ export default {
         },
         //delete a wishlist item
         deleteItem(id){
-            axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`, { withCredentials: true })
+            axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`)
             .then((res) => {
                 if(res.status == 200){
                     this.$router.go(0);

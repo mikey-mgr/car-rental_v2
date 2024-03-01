@@ -1,5 +1,7 @@
 package com.Mike.Proj.dto;
 
+import java.util.ArrayList;
+
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,6 +17,8 @@ public class ProductDto {
     private @NotNull String description;
     private @NotNull Integer categoryId;
     private @NotNull String bookingStatus;
+    private ArrayList<String> features;
+    private ArrayList<String> carousel_imgs;
 
 
     public ProductDto() {
@@ -80,6 +84,35 @@ public class ProductDto {
      */
     public void setBookingStatus(@NotNull String bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    /**
+     * @return @NotNull ArrayList<String> return the features
+     */
+    public ArrayList<String> getFeatures() {
+        return features;
+    }
+
+    /**
+     * @param features the features to set
+     */
+    public void setFeatures(ArrayList<String> features) {
+        this.features = features;
+    }
+
+
+    /**
+     * @return ArrayList<String> return the carousel_imgs
+     */
+    public ArrayList<String> getCarousel_imgs() {
+        return carousel_imgs;
+    }
+
+    /**
+     * @param carousel_imgs the carousel_imgs to set
+     */
+    public void setCarousel_imgs(ArrayList<String> carousel_imgs) {
+        this.carousel_imgs = carousel_imgs;
     }
 
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="container text-text-start">
         <div class="row justify-content-center align-items-center">
-            <div class="col-12 text-center">
+            <div class="col-12 text-center px-4">
                 <h4 class="pt-4 pb-4">{{ category.categoryName }}</h4>
                 <router-link v-show="role=='ADMIN'" :to="{name: 'AddProduct'}" style="float: right">
                     <button class="btn btn-add-prod" >
