@@ -22,10 +22,35 @@
       		<groupId>com.stripe</groupId>
       		<artifactId>stripe-java</artifactId>
 	  	</dependency>	 -->
-	<dependency>
+
+		<!-- spring security configs -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>	
+		</dependency>
+		<dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-config</artifactId>
+        	<version>6.2.1</version>
+ 		</dependency>
+		<dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-web</artifactId>
+			<version>6.2.1</version>
+ 		</dependency>
+
+		<!-- OAuth 2 configs -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency> -->
+
+		<!-- swagger ui -->
+
 		<dependency>
         	<groupId>org.springdoc</groupId>
         	<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -36,10 +61,10 @@
   			<artifactId>javax.annotation-api</artifactId>
   			<version>1.3.2</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
+		</dependency> -->
 
 		
 

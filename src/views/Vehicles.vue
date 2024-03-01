@@ -85,7 +85,7 @@ export default {
     methods:{
         async searchVehicle(e){
             e.preventDefault();
-            await axios.get(`${this.baseURL}/product/find/?name=${this.searchText}`)
+            await axios.get(`${this.baseURL}/product/find/?name=${this.searchText}`, { withCredentials: true })
             .then((res) =>{
                 this.vehicles = res.data;
                 this.search = true;

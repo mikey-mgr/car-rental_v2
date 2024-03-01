@@ -3,7 +3,7 @@
         <div class="row justify-content-center align-items-center">
             <div class="col-12 text-center">
                 <h4 class="pt-4 pb-4">{{ category.categoryName }}</h4>
-                <router-link v-show="users" :to="{name: 'AddProduct'}" style="float: right">
+                <router-link v-show="role=='ADMIN'" :to="{name: 'AddProduct'}" style="float: right">
                     <button class="btn btn-add-prod" >
                         Add Vehicle
                     </button>
@@ -14,7 +14,7 @@
                 <!-- <div v-for="(product, productSize) in filteredProds" :key="productSize"> -->
                 <div v-for="product of filteredProds" :key="product.id"
                     class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex">
-                    <ProductBox :product="product" :users="users"></ProductBox>
+                    <ProductBox :product="product" :role="role"></ProductBox>
                 </div>
             </div>
         </div>
@@ -27,14 +27,15 @@ import axios from 'axios';
 
 export default {
     name: 'ListProducts',
-    props: ["products", "categories", "baseURL","users"], 
+    props: ["products", "categories", "baseURL"], 
     components: { ProductBox },
 
     data() {
         return {
             category: "",
             filteredProds: "",
-            id: ""
+            id: "",
+            role: null
         };
     },
     methods: {
@@ -47,6 +48,7 @@ export default {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                 withCredentials: true 
             }).then(result => {
                 this.filteredProds = result.data
             }).catch((err) => console.log('Error: ', err));
@@ -58,6 +60,7 @@ export default {
         this.category = this.categories.find(category => category.id == this.id);
         // this.filteredProds = this.products.find(filteredProds => filteredProds.categoryId == this.id);
         this.getProducts();
+        this.role = localStorage.getItem("role");
     },
 }
 </script>

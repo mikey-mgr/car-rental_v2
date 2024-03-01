@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 8500",
+    "serve": "vue-cli-service serve --port 8583",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -11,6 +11,9 @@
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "core-js": "^3.8.3",
+    "est": "^0.2.1-alpha",
+    "jsonwebtoken": "^9.0.2",
+    "lint": "^0.8.19",
     "sweetalert": "^2.1.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"

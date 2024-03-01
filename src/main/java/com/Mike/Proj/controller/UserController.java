@@ -1,14 +1,13 @@
 package com.Mike.Proj.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Mike.Proj.dto.ResponseDto;
-import com.Mike.Proj.dto.user.SigninDto;
 import com.Mike.Proj.dto.user.SigninResponseDto;
 import com.Mike.Proj.dto.user.SignupDto;
 import com.Mike.Proj.service.UserService;
@@ -17,7 +16,6 @@ import com.Mike.Proj.service.UserService;
 @RequestMapping("/user")
 //for configuring access to the backend controller from
 //a different server/origin ie. vue app
-@CrossOrigin("http://localhost:8500")
 public class UserController {
 
     @Autowired
@@ -30,8 +28,19 @@ public class UserController {
     }
 
     //signin api
-    @PostMapping("/signin")
-    public SigninResponseDto signin(@RequestBody SigninDto signinDto){
-        return userService.signIn(signinDto);
+    @GetMapping("/signin")
+    public SigninResponseDto signin(){
+        return userService.signIn();
     }
+
+    @GetMapping("/login-fail")
+    public ResponseDto loginFail(){
+        return new ResponseDto("Fail", "Login unsuccessful");
+    }
+
+    @GetMapping("/logout")
+    public String logout(){
+        return ("Logout Success");
+    }
+
 }

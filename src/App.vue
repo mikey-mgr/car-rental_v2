@@ -8,6 +8,7 @@
   @getUsers="getUsers"
   :users="users"
   @clearUsers="clearUsers"
+  :baseURL="baseURL"
   ></Navbar>
 
   <router-view v-if="categories && products" style="min-height: 60vh;"
@@ -28,6 +29,24 @@
 import Navbar from "./components/Navbar.vue";
 import axios from 'axios';
 import Footer from "./components/Footer.vue";
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle'
+
+
+document.addEventListener('click', function(e) {
+  // get the navbar element
+  let navbar = document.getElementById('navbarSupportedContent');
+  // check if the target element is inside the navbar or not
+  if (!e.target.closest('.navbar')) {
+    // if not, toggle the navbar collapse
+    let bsCollapse = new bootstrap.Collapse(navbar, {toggle: false});
+    bsCollapse.hide();
+  }
+});
+document.addEventListener('scroll', function(){
+  let navbar = document.getElementById('navbarSupportedContent');
+  let bsCollapse = new bootstrap.Collapse(navbar, {toggle: false});
+    bsCollapse.hide();
+})
 
 export default {
   components: { Navbar, Footer },
@@ -48,20 +67,20 @@ export default {
     async fetchData() {
 
       // api call to get all the categories
-      await axios.get(this.baseURL + "/category/list")
+      await axios.get(this.baseURL + "/category/list", { withCredentials: true })
       .then(res => {
         this.categories = res.data
       }).catch((err) => console.log('err', err));
 
       // api call to get the products
-      await axios.get(this.baseURL + "/product/list")
+      await axios.get(this.baseURL + "/product/list", { withCredentials: true })
       .then(res => {
         this.products = res.data
       }).catch((err) => console.log('err', err));
 
       //fetch cart items if token is present ie. logged in
       if(this.token){
-        await axios.get(`${this.baseURL}/cart/?token=${this.token}`)
+        await axios.get(`${this.baseURL}/cart/?token=${this.token}`, { withCredentials: true })
         .then((res) => {
             const result = res.data;
             this.cartCount = result.cartItems.length;
@@ -69,7 +88,7 @@ export default {
       }
 
       //fetch all items in all carts as admin
-      await axios.get(`${this.baseURL}/admin/all-cart-items/?token=${this.token}`)
+      await axios.get(`${this.baseURL}/admin/all-cart-items/`, { withCredentials: true })
       .then((res) => {
           const result = res.data;
           this.cartItems = result.cartItems;
@@ -77,7 +96,7 @@ export default {
       }).catch((err) => {console.log("err", err)});
 
       //fetch all items in wishlists as admin
-      await axios.get(`${this.baseURL}/admin/all-wishlists/?token=${this.token}`)
+      await axios.get(`${this.baseURL}/admin/all-wishlists/`, { withCredentials: true })
       .then((res) => {
           this.wishlists = res.data;
       }).catch((err) => {console.log("err", err)});
@@ -91,8 +110,7 @@ export default {
 
     getUsers(){
       //fetch users and their roles
-      this.token = localStorage.getItem("token");
-      axios.post(`${this.baseURL}/admin/users/?token=${this.token}`)
+      axios.get(`${this.baseURL}/admin/users/`, { withCredentials: true })
       .then((res) => {
       this.users = res.data;
       }).catch((err) => {console.log("err", err)});
@@ -116,11 +134,10 @@ html{
   
 }
 div{
-  font-family: "Georgia, 'Times New Roman', Times, serif;"
+  font-family: Akrobat-Regular, sans-serif
 }
 #app{
   margin-top: 8.4rem;
-  transition: all 1s ease-in-out 0s;
 }
 div{
   

@@ -64,7 +64,7 @@
         methods: {
             async editProduct(e) {
                 e.preventDefault();
-                await axios.post(`${this.baseURL}/product/update/${this.id}`, this.product)
+                await axios.post(`${this.baseURL}/product/update/${this.id}`, this.product, { withCredentials: true })
                     .then(() => {
                         this.$emit("fetchData");
                         this.$router.push({name: 'ListProducts', params: {id: this.product.categoryId}});
@@ -75,7 +75,7 @@
                     }).catch(err => console.log('err', err));
             },
             async deleteProduct(){
-                await axios.delete(`${this.baseURL}/product/delete/${this.id}`)
+                await axios.delete(`${this.baseURL}/product/delete/${this.id}`, { withCredentials: true })
                 .then(() =>{
                     this.$emit("fetchData");
                     swal({

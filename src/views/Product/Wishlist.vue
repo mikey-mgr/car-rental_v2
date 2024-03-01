@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
             <div class="col-12 text-center">
-                <h4 v-if="userProducts" class="pt-3">Your Wishlist</h4>
+                <h4 v-if="userProducts.length" class="pt-3">Your Wishlist</h4>
             </div>
         </div>
         <!-- display products -->
@@ -11,6 +11,9 @@
             class="col-md-6 col-xl-4 col-12 pt-3 d-flex">
                 <ProductBox :product="product"/>
             </div>
+        </div>
+        <div class="col-12 mt-5 text-center">
+            <h4 v-if="!userProducts.length">WishList is Empty.</h4>
         </div>
     </div>
 </template>
@@ -40,7 +43,7 @@ export default {
     methods: {
         //get all items in wishlist
         fetchWishlist() {
-            axios.get(`${this.baseURL}/wishlist/${this.token}`)
+            axios.get(`${this.baseURL}/wishlist/${this.token}`, { withCredentials: true })
                 .then((result) => {
                 this.wishlists = result.data;
                 if(this.wishlists!=null){
@@ -58,7 +61,7 @@ export default {
         },
         //delete a wishlist item
         deleteItem(id){
-            axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`)
+            axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`, { withCredentials: true })
             .then((res) => {
                 if(res.status == 200){
                     this.$router.go(0);

@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.Mike.Proj.common.APIResponse;
-import com.Mike.Proj.dto.ProductDto;
 import com.Mike.Proj.dto.WishlistDto;
 import com.Mike.Proj.model.Product;
 import com.Mike.Proj.model.User;
@@ -23,7 +21,6 @@ import com.Mike.Proj.service.AuthenticationService;
 import com.Mike.Proj.service.WishlistService;
 
 @RestController
-@CrossOrigin("http://localhost:8500")
 @RequestMapping("/wishlist")
 public class WishlistController {
     

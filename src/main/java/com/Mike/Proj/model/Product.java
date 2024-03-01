@@ -26,6 +26,7 @@ public class Product {
     @Column(length = 1000)
     private @NotNull String description;
     private @NotNull String bookingStatus;
+    // private @NotNull List<String> features;
 
 
     // Many to one relationship

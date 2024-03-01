@@ -16,7 +16,6 @@
 
 // @RestController
 // @RequestMapping("/order")
-// @CrossOrigin("http://localhost:8500")
 // public class OrderController {
     
 //     @Autowired

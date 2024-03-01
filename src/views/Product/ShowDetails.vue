@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <!-- display image, bootstrap carousel-->
             <div class="col-md-6 col-12">
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="troue">
+                <div id="autoplayCarousel" class="carousel slide" data-bs-ride="troue">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                         <img src="../../assets/AppImages/ford.jpg" class="d-block w-100" alt="...">
@@ -15,11 +15,11 @@
                         <img src="../../assets/AppImages/demio.jpg" class="d-block w-100" alt="...">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#autoplayCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#autoplayCarousel" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
@@ -28,8 +28,8 @@
             <!-- display product details -->
             <div class="col-md-6 col-12">
                 <h4 class="border-bottom border-dark py-2">{{ product.name }}</h4>
-                <h6 class="category font-italic">{{ category.categoryName }}</h6>
-                <h6 class="font-weight-bold">${{ product.price }} per day</h6>
+                <h6 class="category font-style-italic">{{ category.categoryName }}</h6>
+                <h6 class="fw-bold">${{ product.price }} per day</h6>
                 <p>{{ product.description }}</p>
                 <span v-if="product.bookingStatus=='Checked Out'" class="mb-3 badge rounded-pill text-bg-primary">{{ product.bookingStatus }}</span>
                 <span v-if="product.bookingStatus=='Reserved'" class="mb-3 badge rounded-pill text-bg-info">{{ product.bookingStatus }}</span>
@@ -41,14 +41,14 @@
                         <div class="input-group input-group-parent p-0">
                             <div class="input-group col-lg-5 col-md-9 col-sm-5 p-0 mb-2">
                                 <span class="input-group-text">Number of days</span>
-                                <input type="number" min="19/02/2024" max="" id="days-input" class="form-control" v-model="quantity" required/>
+                                <input type="number" min="1" max="30" id="days-input" class="form-control" v-model="quantity" required/>
                             </div>
                             <div class="input-group col-md-9 col-lg-7 col-sm-6 p-0 mb-2">
                                 <span class="input-group-text">Date to book</span>
-                                <input type="date" id="date-input" class="form-control" v-model="bookedFor" required/>
+                                <input type="date" :min="minDate" :max="maxDate" id="date-input" class="form-control" v-model="bookedFor" required/>
                             </div>
                             <div class="col-12 p-0">
-                                <button type="submit" :disabled="inCart" 
+                                <button type="submit" :disabled="inCart"
                                     class="btn btn-primary add-to-cart-button">{{cartString}}
                                 </button>
                             </div>
@@ -70,13 +70,8 @@
                     {{wishlistString}}
                 </button>
 
-                                <!-- Button trigger modal -->
-                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                Launch static backdrop modal
-                </button>
-
-                            Moda
-                <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <!-- Modal to confirm booking -->
+                <div class="modal fade" id="bookingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content text-center">
                             <div class="modal-header">
@@ -84,7 +79,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Your car has been added to cart. View your cart to confirm your booking
+                                Your car has been added to cart.<br>View your cart to confirm your booking
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -92,7 +87,25 @@
                             </div>
                         </div>
                     </div> 
-                </div>-->
+                </div>
+                <!-- Modal to direct user to signin page -->
+                <div class="modal fade " id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content text-center text-bg-dark-subtle">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Login or Register</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ modalText}}
+                            </div>
+                            <div class="modal-footer">
+                                <router-link :to="{name: 'SignupView'}"><button class="btn btn-primary" data-bs-dismiss="modal">Create account</button></router-link>
+                                <router-link :to="{name: 'SigninView'}"><button class="btn btn-primary" data-bs-dismiss="modal">Login</button></router-link>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -100,14 +113,14 @@
 
 <script>
 import axios from 'axios';
-import swal from 'sweetalert'
+import swal from 'sweetalert';
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle'
 
 export default {
     name: "ProductDetails",
     props: ["baseURL", "products", "categories"],
     data(){
         return{
-            
             product: {},
             category: {},
             id: "",
@@ -122,13 +135,14 @@ export default {
             cartItems: null,
             wishlist: null,
             wishlistId: null,
+            modalText: null
             
         }
     },
     methods: {
         //fetch all items in cart n set cart button to disabled if product is present
         async getCart(){
-            await axios.get(`${this.baseURL}/cart/?token=${this.token}`)
+            await axios.get(`${this.baseURL}/cart/?token=${this.token}`, { withCredentials: true })
             .then((res) => {
                 const result = res.data;
                 this.cartItems = result.cartItems;
@@ -149,7 +163,7 @@ export default {
         
         //fetch all items in wishlist n set wishlist button to disabled if product is present
         async getWishlist() {
-            await axios.get(`${this.baseURL}/wishlist/${this.token}`)
+            await axios.get(`${this.baseURL}/wishlist/${this.token}`, { withCredentials: true })
             .then((result) => {
                 this.wishlist = result.data;
             }).catch((err) => {console.log('err', err)});
@@ -169,23 +183,24 @@ export default {
             e.preventDefault();
             if(!this.token){
                 //user isn't logged in
-                swal({
-                    text: "Please login or signup to add booking",
-                    icon: "warning"
-                });
+                let modal2 = document.getElementById('registerModal');
+                let bsShowModal = new bootstrap.Modal(modal2, {toggle: false});
+                bsShowModal.show();
+                this.modalText = "Please login or create a new account to add booking";
                 return;
             }
             //logged in, so add item to cart
-            await axios.post(`${this.baseURL}/cart/add?token=${this.token}`, {
+            await axios.post(`${this.baseURL}/cart/add?token=${this.token}`, 
+            {
                 productId: this.id,    
                 quantity: this.quantity,
                 bookedFor: this.bookedFor
-            }).then((res) => {
+            }, { withCredentials: true }
+            ).then((res) => {
                 if(res.status == 201){
-                    // swal({
-                    //     text: "Your car has been added to cart. View your cart to proceed with the booking",
-                    //     icon: "success"
-                    // });
+                    let modal1 = document.getElementById('bookingModal');
+                    let bsShowModal = new bootstrap.Modal(modal1, {toggle: false});
+                    bsShowModal.show();
                     this.cartString = "Added to bookings",
                     this.inCart = true,
                     this.$emit("fetchData")
@@ -196,17 +211,19 @@ export default {
         //async call activated when add to wishlist button is clicked
         async addToWishlist(){
             if(!this.token){
-                //user isn's logged in
-                swal({
-                    text: "Please login or signup to add item to wishlist",
-                    icon: "warning"
-                });
+                //user isn't logged in
+                let modal2 = document.getElementById('registerModal');
+                let bsShowModal = new bootstrap.Modal(modal2, {toggle: false});
+                bsShowModal.show();
+                this.modalText = "Please login or create a new account to add to wishlist";
                 return;
             }
             //logged in, so add item to wishlist
-            await axios.post(`${this.baseURL}/wishlist/add?token=${this.token}`, {
+            await axios.post(`${this.baseURL}/wishlist/add?token=${this.token}`,
+            {
                 id: this.product.id,
-            }).then((res) => {
+            }, { withCredentials: true }
+            ).then((res) => {
                 //if backend sucessfully adds to wishlist, change button text to confirm
                 if(res.status === 201){
                     this.wishlistString = "Added to wishlist";
@@ -222,7 +239,7 @@ export default {
 
         //remove item from wishlist
         async removeWishlist(id){
-            await axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`)
+            await axios.delete(`${this.baseURL}/wishlist/delete/${id}?token=${this.token}`, { withCredentials: true })
             .then((res) => {
                 if(res.status == 200){
                     this.wishlistString = 'Removed from wishlist'
@@ -239,7 +256,43 @@ export default {
                     })
                 }
             }).catch((err) => console.log('err', err));
-        }
+        },
+
+        //set the midate for the date element
+        minDate() {
+            // Get the current date
+            let today = new Date();
+            // Format the date as yyyy-mm-dd
+            let yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; // January is 0
+            let dd = today.getDate();
+            if (mm < 10) {
+                mm = "0" + mm;
+            }
+            if (dd < 10) {
+                dd = "0" + dd;
+            }
+            return yyyy + "-" + mm + "-" + dd;
+        },
+
+        //set the maxdate for the date element
+        maxDate() {
+            // Get the current date
+            let today = new Date();
+            // Add 30 days to the date
+            let after30Days = new Date(today.setDate(today.getDate() + 30));
+            // Format the date as yyyy-mm-dd
+            let yyyy = after30Days.getFullYear();
+            let mm = after30Days.getMonth() + 1; // January is 0
+            let dd = after30Days.getDate();
+            if (mm < 10) {
+                mm = "0" + mm;
+            }
+            if (dd < 10) {
+                dd = "0" + dd;
+            }
+            return yyyy + "-" + mm + "-" + dd;
+        },
     },
 
     mounted() {

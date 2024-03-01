@@ -40,7 +40,7 @@
             async editCategory() {
                 delete this.category["products"]
                 // console.log('category', this.category)
-                await axios.post(`${this.baseURL}/category/update/${this.id}`, this.category)
+                await axios.post(`${this.baseURL}/category/update/${this.id}`, this.category, { withCredentials: true })
                 .then(() => {
                     this.$emit("fetchData");
                     this.$router.push({name: 'AdminCategory'})

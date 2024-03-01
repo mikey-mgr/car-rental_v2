@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.Mike.Proj.dto.ProductDto;
 import com.Mike.Proj.dto.WishlistDto;
 import com.Mike.Proj.exceptions.CustomException;
 import com.Mike.Proj.model.User;

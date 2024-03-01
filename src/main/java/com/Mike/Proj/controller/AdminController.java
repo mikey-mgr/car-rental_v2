@@ -5,21 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.Mike.Proj.dto.UserDto;
 import com.Mike.Proj.dto.WishlistDto;
 import com.Mike.Proj.dto.cart.CartDto;
-import com.Mike.Proj.model.User;
 import com.Mike.Proj.service.AdminService;
 import com.Mike.Proj.service.AuthenticationService;
 
 @RestController
-@CrossOrigin("http://localhost:8500")
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -30,14 +25,14 @@ public class AdminController {
     AuthenticationService authenticationService;
 
     //get a list of all users
-    @PostMapping("/users/")
-    public ResponseEntity<List<UserDto>> getUsers(@RequestParam ("token") String token){
+    @GetMapping("/users/")
+    public ResponseEntity<List<UserDto>> getUsers(){
 
         //find the user
-        User user = authenticationService.getUser(token);
+        // User user = authenticationService.getUser(token);
 
-        //verify if user is an admin
-        adminService.verifyAdminUser(user);
+        // //verify if user is an admin
+        // adminService.verifyAdminUser(user);
 
         List<UserDto> userDto = adminService.getUsers();
         return new ResponseEntity<>(userDto, HttpStatus.OK);
@@ -45,12 +40,12 @@ public class AdminController {
 
     //get all cart items
     @GetMapping("/all-cart-items/")
-    public ResponseEntity<CartDto> getAllCartItems(@RequestParam("token") String token){
+    public ResponseEntity<CartDto> getAllCartItems(){
         //find user
-        User user = authenticationService.getUser(token);
+        // User user = authenticationService.getUser(token);
 
-        //verify whether user is admin
-        adminService.verifyAdminUser(user);
+        // //verify whether user is admin
+        // adminService.verifyAdminUser(user);
 
         CartDto cartDto = adminService.listCartBookings();
         
@@ -59,12 +54,12 @@ public class AdminController {
 
     //get all wishlists
     @GetMapping("/all-wishlists/")
-    public ResponseEntity<List<WishlistDto>> getAllWishlists(@RequestParam("token") String token){
+    public ResponseEntity<List<WishlistDto>> getAllWishlists(){
         //find user
-        User user = authenticationService.getUser(token);
+        // User user = authenticationService.getUser(token);
 
-        //verify whether user is admin
-        adminService.verifyAdminUser(user);
+        // //verify whether user is admin
+        // adminService.verifyAdminUser(user);
 
         List<WishlistDto> wishlists = adminService.listWishlists();
         

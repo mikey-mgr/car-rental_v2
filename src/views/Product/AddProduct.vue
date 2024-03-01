@@ -71,7 +71,7 @@
                     bookingStatus: this.bookingStatus
                 };
 
-                axios.post(this.baseURL+"/product/add", newProduct)
+                axios.post(this.baseURL+"/product/add", newProduct, { withCredentials: true })
                 .then(() => {
                     swal({
                         text: "Vehicle added successfully",

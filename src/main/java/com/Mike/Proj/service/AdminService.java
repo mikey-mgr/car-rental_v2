@@ -2,7 +2,6 @@ package com.Mike.Proj.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import com.Mike.Proj.dto.UserDto;
 import com.Mike.Proj.dto.WishlistDto;
 import com.Mike.Proj.dto.cart.CartDto;
 import com.Mike.Proj.dto.cart.CartItemDto;
-import com.Mike.Proj.exceptions.AuthenticationFailException;
 import com.Mike.Proj.exceptions.CustomException;
 import com.Mike.Proj.model.Cart;
 import com.Mike.Proj.model.User;
@@ -68,11 +66,11 @@ public class AdminService {
         cartRepo.delete(cart); 
     }
 
-    public void verifyAdminUser(User user) {
-        if(Objects.isNull(user.getRole())){
-            throw new AuthenticationFailException("You cannot access this information");
-        }
-    }
+    // public void verifyAdminUser(User user) {
+    //     if(Objects.isNull(user.getRole())){
+    //         throw new AuthenticationFailException("You cannot access this information");
+    //     }
+    // }
 
     //get a list of all users
     public List<UserDto> getUsers(){

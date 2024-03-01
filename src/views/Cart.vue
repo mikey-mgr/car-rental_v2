@@ -45,6 +45,7 @@
                 <!-- display total price -->
                 <div class="total-cost pt-2 text-end">
                     <h5>Total : ${{ totalCost.toFixed(2) }}</h5>
+                    <!-- <h5 v-if="!totalcost">Total : $0.00</h5> -->
                     <button @click="bookRental" v-show="totalCost" class="btn btn-primary confirm">Confirm Booking</button>
                 </div>
                 <div class="col-12 mt-5"><h6 v-if="!cartItems[0]">Cart is Empty.<br>Visit our 
@@ -79,7 +80,7 @@ export default {
         },
         //fetch all items in cart
         listCartItems(){
-            axios.get(`${this.baseURL}/cart/?token=${this.token}`)
+            axios.get(`${this.baseURL}/cart/?token=${this.token}`, { withCredentials: true })
             .then((res) => {
                 const result = res.data;
                 this.cartItems = result.cartItems;
@@ -88,7 +89,7 @@ export default {
         },
         //delete a cart item
         deleteItem(id){
-            axios.delete(`${this.baseURL}/cart/delete/${id}?token=${this.token}`)
+            axios.delete(`${this.baseURL}/cart/delete/${id}?token=${this.token}`, { withCredentials: true })
             .then((res) => {
                 if(res.status == 200){
                     this.$router.go(0);

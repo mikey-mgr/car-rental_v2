@@ -17,7 +17,7 @@
                 {{ product.description.substring(0, 65) }}...
             </p>
             <router-link :to="{name: 'EditProduct', params: {id: product.id}}"
-                v-show="$route.name == 'AdminProduct' || users" >
+                v-show="$route.name == 'AdminProduct' || role == 'ADMIN'" >
                 <button class="btn btn-primary edit-prod mr-2">Edit</button>
             </router-link>
         </div>
@@ -27,7 +27,7 @@
 
     export default {
         name: "ProductBox",
-        props: ["product", "users"],
+        props: ["product", "role"],
         data() {
             return {
                 

@@ -71,7 +71,7 @@ export default {
                     lastName: this.lastName,
                     password: this.password,
                 };
-                await axios.post(`${this.baseURL}/user/signup`, user)
+                await axios.post(`${this.baseURL}/user/signup`, user, { withCredentials: true })
                 .then(() => {
                     this.$router.replace('/');
                     swal({
@@ -80,7 +80,15 @@ export default {
                     });
                     this.$router.push({name: 'SigninView'})
                 })
-                .catch((err) => console.error('err', err));
+                .catch((err) => {
+                    console.error('err', err);
+                    if(err.response.data == "User with email is already present"){
+                        swal({
+                            text: "A user with this email already exists",
+                            icon: "info"
+                        });
+                    }
+                });
 
             } else {
                 //show some error

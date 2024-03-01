@@ -9,7 +9,8 @@
                     <div class="fw-bold">{{ user.firstName }} {{ user.lastName }}</div>
                     {{ user.email }}<br>
                     <div v-for="cart of cartItems" :key="cart.id">
-                        <div v-if="cart.userId == user.id"><hr class="border border-black border-2">{{cart.product.name}}, <span class="fw-bold text-right">${{ cart.product.price }}</span><br>
+                        <div v-if="cart.userId == user.id"><hr class="border border-black border-2">
+                            {{cart.product.name}}, <span class="fw-bold text-end">${{ cart.product.price }}</span><br>
                             Number of days: {{ cart.quantity }}<br>
                             Booked for: {{ cart.bookedFor }}
                         </div>

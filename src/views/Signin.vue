@@ -47,22 +47,40 @@ export default {
                 email: this.email,
                 password: this.password,
             }
-            await axios.post(`${this.baseURL}/user/signin`, body)
-            .then((res) => {
-                this.$emit("fetchData");
-                swal({
-                    text: "Login successful, redirecting",
-                    icon: "success"
-                });
-                window.location.replace("/home");
-                localStorage.setItem("token", res.data.token);
+                axios({
+                    method: "post",
+                    url: `${this.baseURL}/login`,
+                    data: new URLSearchParams(body), // Convert to x-www-form-urlencoded
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    withCredentials: true // send cookies
+                }).then((res) =>{
+                    console.log(res)
+                    let loginInfo = res.data;
+                    if(loginInfo.status=="Login Success"){
+                        this.$emit("fetchData");
+                        swal({
+                            text: "Login successful, redirecting",
+                            icon: "success"
+                        });
+                        window.location.replace("/home");
+                        localStorage.setItem("token", loginInfo.token);
+                        localStorage.setItem("role", loginInfo.role);
+                    }else {
+                        swal({
+                            text: "Invalid details",
+                            icon: "warning"
+                        })
+                    }
             }).catch((err) => {
-                console.error('err', err);
-                swal({
-                    text: "Invalid details, please try again",
-                    icon: "warning"
-                });
-            });
+                console.log('err', err);
+                if(err.code == "ERR_NETWORK"){
+                    swal({
+                        text: "Network error, please check your connection",
+                        icon: "error"
+                    })
+                }});
         },
     },
     mounted(){
@@ -80,10 +98,10 @@ export default {
     border-color: #f0c14b;
 }
 
-@media screen {
+/* @media screen {
     #signin-div{
     }
-}
+} */
 .create-account{
     background-color: lightgray;
     border-color: lightgray;

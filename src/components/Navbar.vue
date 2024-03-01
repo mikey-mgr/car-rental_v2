@@ -21,9 +21,9 @@
         </button>
         <div class="collapse navbar-collapse mx-4 justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav justify-content-evenly w-100">
-              <li class="nav-item"><router-link class="nav-link text-light" v-if="users" :to="{name: 'AdminView'}">Admin</router-link></li>
-              <li class="nav-item"><router-link class="nav-link text-light" :to="{name: 'HomeView'}">Home</router-link></li>
-              <li class="nav-item"><router-link class="nav-link text-light" :to="{name: 'VehiclesView'}">Vehicles</router-link></li>
+              <li class="nav-item"><router-link class="nav-link text-light" v-if="role == 'ADMIN'" :to="{name: 'AdminView'}">ADMIN</router-link></li>
+              <li class="nav-item"><router-link class="nav-link text-light" :to="{name: 'HomeView'}">HOME</router-link></li>
+              <li class="nav-item"><router-link class="nav-link text-light" :to="{name: 'VehiclesView'}">VEHICLES</router-link></li>
               
             <!-- Dropdown for account -->
             <!-- <ul class="navbar-nav nav-underline mr-auto"> -->
@@ -32,18 +32,18 @@
                     class="nav-link text-light dropdown-toggle" 
                       id="navbarAccount" 
                         data-toggle="dropdown"
-                        >Account
+                        >ACCOUNT
                 </a>
                 <ul class="dropdown-menu account-dropdown" aria-labelledby="navbarAccount">
-                  <router-link v-if="token" class="dropdown-item" :to="{name: 'WishList'}">Wishlist</router-link>
-                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SignupView'}">Signup</router-link>
+                  <router-link v-if="token" class="dropdown-item" :to="{name: 'WishList'}">WISHLIST</router-link>
+                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SignupView'}">SIGNUP</router-link>
                   <li><hr class="dropdown-divider"></li>
-                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SigninView'}">Login</router-link>
-                  <a href="#" v-if="token" @click="logout" class="dropdown-item">Logout</a>
+                  <router-link v-if="!token" class="dropdown-item" :to="{name: 'SigninView'}">LOGIN</router-link>
+                  <a href="#" v-if="token" @click="logout" class="dropdown-item">LOGOUT</a>
                 </ul>
               </li>
             <!-- </ul > -->
-              <li class="nav-item cart position-relative">
+              <li v-if="role" class="nav-item cart position-relative">
                   <span id="cart-nav-count">{{ cartCount }}</span>
                   <router-link style="font-size: 36px; color: #c18e32;" 
                       :to="{name:'CartView'}" class="py-2 bi bi-cart nav-link text-decoration-none">
@@ -57,35 +57,43 @@
 </template>
 
 <script>
+import axios from 'axios';
 import swal from 'sweetalert';
 
 
   export default {
     name: "NavbarView",
-    props:["cartCount", "users"],
+    props:["cartCount", "users", "baseURL"],
     data() {
       return {
-        
+        role: null,
       }
     },
     methods: {
-      logout(){
-        swal({
-        text: "You have logged out",
-        icon: "success"
-        });
-        localStorage.removeItem("token");
-        this.token = null;
-        this.$emit("clearUsers");
-        this.$router.push({name: 'HomeView'});
-        this.$emit("resetCartCount");
-        // this.$emit("getUsers");
-        window.location.replace("/home");
+      async logout(){
+        await axios.get(`${this.baseURL}/logout`, { withCredentials: true })
+        .then((res) =>{
+          if(res.data == "Logout Success"){
+            swal({
+            text: "You have logged out",
+            icon: "success"
+            });
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            this.token = null;
+            this.$emit("clearUsers");
+            this.$router.push({name: 'HomeView'});
+            this.$emit("resetCartCount");
+            // this.$emit("getUsers");
+            window.location.replace("/home");
+          }
+        }).catch((err) => console.log('err', err));
       },
       
     },
     mounted(){
         this.token = localStorage.getItem("token");
+        this.role = localStorage.getItem("role");
     },
   }
 </script>

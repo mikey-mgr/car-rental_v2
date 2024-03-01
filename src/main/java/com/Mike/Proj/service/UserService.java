@@ -1,33 +1,38 @@
 package com.Mike.Proj.service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.Mike.Proj.dto.ResponseDto;
-import com.Mike.Proj.dto.user.SigninDto;
 import com.Mike.Proj.dto.user.SigninResponseDto;
 import com.Mike.Proj.dto.user.SignupDto;
-import com.Mike.Proj.exceptions.AuthenticationFailException;
 import com.Mike.Proj.exceptions.CustomException;
 import com.Mike.Proj.model.AuthenticationToken;
 import com.Mike.Proj.model.User;
+import com.Mike.Proj.repository.TokenRepository;
 import com.Mike.Proj.repository.UserRepo;
-
 import jakarta.transaction.Transactional;
-import jakarta.xml.bind.DatatypeConverter;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 
     @Autowired
     UserRepo userRepo;
 
     @Autowired
+    TokenRepository tokenRepo;
+
+    @Autowired
     AuthenticationService authenticationService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     //signup service
     @Transactional
@@ -38,15 +43,8 @@ public class UserService {
         }
 
         //hash password
-        String encryptedPassword = signupDto.getPassword();
+        String encryptedPassword = passwordEncoder.encode(signupDto.getPassword());
         
-        try {
-            encryptedPassword = hashPassword(signupDto.getPassword());
-        } catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
-            throw new CustomException(e.getMessage());
-        }
-
         User user = new User(signupDto.getFirstName(), signupDto.getLastName(), signupDto.getEmail(), encryptedPassword, "USER");
         userRepo.save(user);
 
@@ -57,37 +55,41 @@ public class UserService {
         return responseDto;
     }
 
-    //encrypt password
-    private String hashPassword(String password) throws NoSuchAlgorithmException{
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(password.getBytes());
-        byte[] digest = md.digest();
-        String hash = DatatypeConverter.printHexBinary(digest).toUpperCase();
-        return hash;
+    //api for login success to print user token and role
+    public SigninResponseDto signIn() {
+
+        //get current logged in user in the springsecurity
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepo.findByEmail(email);
+        AuthenticationToken token = tokenRepo.findByUser(user);
+        String userRole = null;
+        try{
+            userRole = user.getRole();
+        } catch (Exception e) {
+            throw new CustomException("User does not exist");
+        }
+
+        return new SigninResponseDto("Login Success", token.getToken(), userRole);
     }
 
-    //signin to app
-    public SigninResponseDto signIn(SigninDto signinDto) {
-        //check if user exists
-        User user = userRepo.findByEmail(signinDto.getEmail());
-        if (Objects.isNull(user)){
-            throw new AuthenticationFailException("User is not valid");
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepo.findByEmail(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Username '" + username +"' not found");
         }
-        //validate password
+        String encodedPassword;
+
         try {
-            if(!user.getPassword().equals(hashPassword(signinDto.getPassword()))){
-                throw new AuthenticationFailException("User is not valid");
-            }
+            encodedPassword = user.getPassword();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new CustomException(e.getMessage());
         }
         
-        //find token if passwords match
-        AuthenticationToken token = authenticationService.getToken(user);
-
-        if (Objects.isNull(token)){
-            throw new CustomException("Authentication token not found");
-        } else return new SigninResponseDto("Login Success", token.getToken());
+        return org.springframework.security.core.userdetails.User.withUsername(username)
+            .password(encodedPassword)
+            .roles(user.getRole())
+            .build();
     }
 }
